@@ -43,12 +43,6 @@ const RegisterPage: React.FC<RegisterPageProps> = ({ onRegisterSuccess, onNaviga
   const validate = (): boolean => {
     const newErrors: Partial<RegisterRequest & { confirmPassword: string }> = {};
 
-    if (!formData.username.trim()) {
-      newErrors.username = 'Username is required';
-    } else if (formData.username.length < 3) {
-      newErrors.username = 'Username must be at least 3 characters';
-    }
-
     if (!formData.institutionalEmail.trim()) {
       newErrors.institutionalEmail = 'Email is required';
     } else if (!/\S+@\S+\.\S+/.test(formData.institutionalEmail)) {
@@ -90,8 +84,13 @@ const RegisterPage: React.FC<RegisterPageProps> = ({ onRegisterSuccess, onNaviga
 
     setIsLoading(true);
 
+    const payload: RegisterRequest = {
+      ...formData,
+      username: formData.institutionalEmail.trim().toLowerCase(),
+    };
+
     try {
-      const response = await authService.register(formData);
+      const response = await authService.register(payload);
       
       if (response.userId) {
         setSuccessMessage('Registration successful! Redirecting to login...');
@@ -109,11 +108,16 @@ const RegisterPage: React.FC<RegisterPageProps> = ({ onRegisterSuccess, onNaviga
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 py-8">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h2 className="text-3xl font-bold text-center mb-6 text-gray-800">
-          Register for CampusGuru
-        </h2>
+    <div className="flex min-h-screen items-center justify-center bg-gray-100 px-4 py-8">
+      <div className="w-full max-w-[360px] rounded-md border border-gray-200 bg-white p-5 shadow-sm sm:p-6">
+        <div className="mb-5 text-center">
+          <div className="mb-4 flex items-center justify-center gap-1.5">
+            <div className="flex h-6 w-6 items-center justify-center rounded-md bg-blue-600 text-xs font-bold text-white">C</div>
+            <span className="text-lg font-semibold text-blue-600">CampusGuru</span>
+          </div>
+          <h2 className="text-[34px] font-bold leading-none text-gray-900">Create Account</h2>
+          <p className="mt-2 text-xs text-gray-500">Join as a learner to find tutors or as a tutor to offer your services</p>
+        </div>
 
         {apiError && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
@@ -128,29 +132,7 @@ const RegisterPage: React.FC<RegisterPageProps> = ({ onRegisterSuccess, onNaviga
         )}
 
         <form onSubmit={handleSubmit}>
-          <Input
-            label="Username"
-            type="text"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-            error={errors.username}
-            placeholder="Choose a username"
-            autoComplete="username"
-          />
-
-          <Input
-            label="Institutional Email"
-            type="email"
-            name="institutionalEmail"
-            value={formData.institutionalEmail}
-            onChange={handleChange}
-            error={errors.institutionalEmail}
-            placeholder="your.email@university.edu"
-            autoComplete="email"
-          />
-
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-2">
             <Input
               label="First Name"
               type="text"
@@ -158,8 +140,9 @@ const RegisterPage: React.FC<RegisterPageProps> = ({ onRegisterSuccess, onNaviga
               value={formData.firstName}
               onChange={handleChange}
               error={errors.firstName}
-              placeholder="First name"
+              placeholder="Juan"
               autoComplete="given-name"
+              containerClassName="mb-3"
             />
 
             <Input
@@ -169,25 +152,24 @@ const RegisterPage: React.FC<RegisterPageProps> = ({ onRegisterSuccess, onNaviga
               value={formData.lastName}
               onChange={handleChange}
               error={errors.lastName}
-              placeholder="Last name"
+              placeholder="Dela Cruz"
               autoComplete="family-name"
+              containerClassName="mb-3"
             />
           </div>
 
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-              Role
-            </label>
-            <select
-              name="role"
-              value={formData.role}
-              onChange={handleChange}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            >
-              <option value="LEARNER">Learner</option>
-              <option value="TUTOR">Tutor</option>
-            </select>
-          </div>
+          <Input
+            label="Institutional Email"
+            type="email"
+            name="institutionalEmail"
+            value={formData.institutionalEmail}
+            onChange={handleChange}
+            error={errors.institutionalEmail}
+            placeholder="juan@cit.edu"
+            autoComplete="email"
+            helperText="Must be a university email e.g. juan@cit.edu"
+            containerClassName="mb-3"
+          />
 
           <Input
             label="Password"
@@ -196,8 +178,9 @@ const RegisterPage: React.FC<RegisterPageProps> = ({ onRegisterSuccess, onNaviga
             value={formData.password}
             onChange={handleChange}
             error={errors.password}
-            placeholder="Create a password"
+            placeholder="••••••••"
             autoComplete="new-password"
+            containerClassName="mb-3"
           />
 
           <Input
@@ -207,29 +190,52 @@ const RegisterPage: React.FC<RegisterPageProps> = ({ onRegisterSuccess, onNaviga
             value={confirmPassword}
             onChange={handleChange}
             error={errors.confirmPassword}
-            placeholder="Confirm your password"
+            placeholder="••••••••"
             autoComplete="new-password"
+            containerClassName="mb-3"
           />
 
-          <div className="flex items-center justify-between mb-4">
+          <div className="mb-3">
+            <p className="mb-1.5 text-xs font-semibold text-gray-800">I am a</p>
+            <div className="grid grid-cols-2 gap-0.5 rounded-md bg-gray-100 p-0.5">
+              <Button
+                type="button"
+                variant={formData.role === 'LEARNER' ? 'primary' : 'outline'}
+                className="w-full"
+                onClick={() => setFormData((prev) => ({ ...prev, role: 'LEARNER' }))}
+              >
+                {formData.role === 'LEARNER' ? '✓ Learner' : 'Learner'}
+              </Button>
+              <Button
+                type="button"
+                variant={formData.role === 'TUTOR' ? 'primary' : 'outline'}
+                className="w-full"
+                onClick={() => setFormData((prev) => ({ ...prev, role: 'TUTOR' }))}
+              >
+                {formData.role === 'TUTOR' ? '✓ Tutor' : 'Tutor'}
+              </Button>
+            </div>
+          </div>
+
+          <div className="mb-3">
             <Button
               type="submit"
               isLoading={isLoading}
               className="w-full"
             >
-              Register
+              Sign Up
             </Button>
           </div>
 
-          <div className="text-center">
-            <p className="text-gray-600 text-sm">
+          <div className="text-center text-xs text-gray-500">
+            <p>
               Already have an account?{' '}
               <button
                 type="button"
                 onClick={onNavigateToLogin}
-                className="text-blue-500 hover:text-blue-700 font-semibold"
+                className="font-semibold text-blue-600 hover:text-blue-700"
               >
-                Login here
+                Log In
               </button>
             </p>
           </div>

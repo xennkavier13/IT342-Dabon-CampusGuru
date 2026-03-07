@@ -76,11 +76,16 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess, onNavigateToRegis
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h2 className="text-3xl font-bold text-center mb-6 text-gray-800">
-          Login to CampusGuru
-        </h2>
+    <div className="flex min-h-screen items-center justify-center bg-gray-100 px-4 py-8">
+      <div className="w-full max-w-[360px] rounded-md border border-gray-200 bg-white p-5 shadow-sm sm:p-6">
+        <div className="mb-5 text-center">
+          <div className="mb-4 flex items-center justify-center gap-1.5">
+            <div className="flex h-6 w-6 items-center justify-center rounded-md bg-blue-600 text-xs font-bold text-white">C</div>
+            <span className="text-lg font-semibold text-blue-600">CampusGuru</span>
+          </div>
+          <h2 className="text-[34px] font-bold leading-none text-gray-900">Welcome Back</h2>
+          <p className="mt-2 text-xs text-gray-500">Log in to your CampusGuru account</p>
+        </div>
 
         {apiError && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
@@ -94,48 +99,53 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess, onNavigateToRegis
           </div>
         )}
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="space-y-0">
           <Input
-            label="Username"
+            label="Email Address"
             type="text"
             name="username"
             value={formData.username}
             onChange={handleChange}
             error={errors.username}
-            placeholder="Enter your username"
+            placeholder="juan@cit.edu"
             autoComplete="username"
           />
 
           <Input
             label="Password"
+            labelRight={(
+              <button type="button" className="text-[10px] font-medium text-blue-600 hover:text-blue-700">
+                Forgot password?
+              </button>
+            )}
             type="password"
             name="password"
             value={formData.password}
             onChange={handleChange}
             error={errors.password}
-            placeholder="Enter your password"
+            placeholder="••••••••"
             autoComplete="current-password"
           />
 
-          <div className="flex items-center justify-between mb-4">
+          <div className="mb-3 mt-2">
             <Button
               type="submit"
               isLoading={isLoading}
               className="w-full"
             >
-              Login
+              Log In
             </Button>
           </div>
 
-          <div className="text-center">
-            <p className="text-gray-600 text-sm">
-              Don't have an account?{' '}
+          <div className="text-center text-xs text-gray-500">
+            <p>
+              Don&apos;t have an account?{' '}
               <button
                 type="button"
                 onClick={onNavigateToRegister}
-                className="text-blue-500 hover:text-blue-700 font-semibold"
+                className="font-semibold text-blue-600 hover:text-blue-700"
               >
-                Register here
+                Sign Up
               </button>
             </p>
           </div>
