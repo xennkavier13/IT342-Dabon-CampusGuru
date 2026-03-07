@@ -1,0 +1,80 @@
+# OS / editor files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+.idea/
+*.iml
+.project
+.classpath
+.settings/
+.vscode/
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+
+# Spring configuration secrets
+backend/src/main/resources/application*.properties
+backend/src/main/resources/application*.yml
+backend/src/main/resources/application*.yaml
+
+# Keep example templates if present
+!backend/src/main/resources/application-example.properties
+!backend/src/main/resources/application-example.yml
+!backend/src/main/resources/application-example.yaml
+!backend/src/main/resources/application.template.properties
+!backend/src/main/resources/application.template.yml
+!backend/src/main/resources/application.template.yaml
+
+
+# Java / Kotlin / Spring build outputs
+target/
+build/
+out/
+bin/
+
+# Maven wrapper JAR should be committed; keep wrapper scripts
+!backend/.mvn/wrapper/maven-wrapper.jar
+
+# Gradle
+.gradle/
+
+# Kotlin
+*.kotlin_module
+
+# JVM crash logs
+hs_err_pid*
+replay_pid*
+
+# Node / React
+node_modules/
+dist/
+coverage/
+.parcel-cache/
+.next/
+.nuxt/
+.svelte-kit/
+*.tsbuildinfo
+
+# Package manager caches
+.npm/
+.pnpm-store/
+.yarn/
+
+# Test / temp artifacts
+*.tmp
+*.temp
+tmp/
+temp/
+
