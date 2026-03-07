@@ -5,6 +5,7 @@ import edu.cit.dabon.campusguru.dto.LoginRequest;
 import edu.cit.dabon.campusguru.dto.RegisterRequest;
 import edu.cit.dabon.campusguru.entity.User;
 import edu.cit.dabon.campusguru.repository.UserRepository;
+import edu.cit.dabon.campusguru.security.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,18 +21,21 @@ public class UserService {
     
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private JwtService jwtService;
     
     @Transactional
     public AuthResponse registerUser(RegisterRequest request) {
         // Check if username already exists
         if (userRepository.existsByUsername(request.getUsername())) {
-            return new AuthResponse(null, null, null, null, null, null, 
+            return new AuthResponse(null, null, null, null, null, null, null,
                 "Username already exists");
         }
         
         // Check if email already exists
         if (userRepository.existsByInstitutionalEmail(request.getInstitutionalEmail())) {
-            return new AuthResponse(null, null, null, null, null, null, 
+            return new AuthResponse(null, null, null, null, null, null, null,
                 "Email already exists");
         }
         
@@ -46,6 +50,7 @@ public class UserService {
         );
         
         User savedUser = userRepository.save(user);
+        String token = jwtService.generateToken(savedUser);
         
         return new AuthResponse(
             savedUser.getUserId(),
@@ -54,6 +59,7 @@ public class UserService {
             savedUser.getFirstName(),
             savedUser.getLastName(),
             savedUser.getRole(),
+            token,
             "User registered successfully"
         );
     }
@@ -63,7 +69,7 @@ public class UserService {
         Optional<User> userOptional = userRepository.findByUsername(request.getUsername());
         
         if (userOptional.isEmpty()) {
-            return new AuthResponse(null, null, null, null, null, null, 
+            return new AuthResponse(null, null, null, null, null, null, null,
                 "Invalid username or password");
         }
         
@@ -71,9 +77,11 @@ public class UserService {
         
         // Verify password
         if (!passwordEncoder.matches(request.getPassword(), user.getPasswordHash())) {
-            return new AuthResponse(null, null, null, null, null, null, 
+            return new AuthResponse(null, null, null, null, null, null, null,
                 "Invalid username or password");
         }
+
+        String token = jwtService.generateToken(user);
         
         return new AuthResponse(
             user.getUserId(),
@@ -82,6 +90,7 @@ public class UserService {
             user.getFirstName(),
             user.getLastName(),
             user.getRole(),
+            token,
             "Login successful"
         );
     }

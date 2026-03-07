@@ -9,6 +9,7 @@ public class AuthResponse {
     private String firstName;
     private String lastName;
     private String role;
+    private String token;
     private String message;
     
     // Constructors
@@ -16,13 +17,14 @@ public class AuthResponse {
     }
     
     public AuthResponse(UUID userId, String username, String institutionalEmail, 
-                       String firstName, String lastName, String role, String message) {
+                       String firstName, String lastName, String role, String token, String message) {
         this.userId = userId;
         this.username = username;
         this.institutionalEmail = institutionalEmail;
         this.firstName = firstName;
         this.lastName = lastName;
         this.role = role;
+        this.token = token;
         this.message = message;
     }
     
@@ -73,6 +75,14 @@ public class AuthResponse {
     
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
     
     public String getMessage() {
