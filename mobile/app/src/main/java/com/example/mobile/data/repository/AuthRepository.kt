@@ -32,7 +32,9 @@ class AuthRepository(
                     role = role
                 )
             ).also { response ->
-                sessionManager.saveAccessToken(response.access_token)
+                val token = response.token
+                    ?: throw IllegalStateException("Missing authentication token from server.")
+                sessionManager.saveAccessToken(token)
             }
         }.fold(
             onSuccess = { Result.success(it) },
@@ -48,7 +50,9 @@ class AuthRepository(
                     password = password
                 )
             ).also { response ->
-                sessionManager.saveAccessToken(response.access_token)
+                val token = response.token
+                    ?: throw IllegalStateException("Missing authentication token from server.")
+                sessionManager.saveAccessToken(token)
             }
         }.fold(
             onSuccess = { Result.success(it) },
