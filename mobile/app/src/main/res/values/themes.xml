@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Mobile" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.Mobile" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/supabase_green</item>
+        <item name="colorPrimaryVariant">@color/supabase_green_dark</item>
+        <item name="colorSecondary">@color/supabase_green</item>
+        <item name="android:statusBarColor">@color/supabase_green_dark</item>
+    </style>
 </resources>

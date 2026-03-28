@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">mobile</string>
+    <string name="login_title">Welcome back</string>
+    <string name="login_subtitle">Sign in to continue to CampusGuru</string>
+    <string name="register_title">Create account</string>
+    <string name="register_subtitle">Register with your Phase 1 API credentials</string>
+    <string name="first_name_hint">First name</string>
+    <string name="last_name_hint">Last name</string>
+    <string name="institutional_email_hint">Institutional email</string>
+    <string name="email_hint">Email address</string>
+    <string name="password_hint">Password</string>
+    <string name="confirm_password_hint">Confirm password</string>
+    <string name="role_label">I am a</string>
+    <string name="role_learner">Learner</string>
+    <string name="role_tutor">Tutor</string>
+    <string name="login_button">Log in</string>
+    <string name="register_button">Register</string>
+    <string name="go_to_register">No account yet? Create one</string>
+    <string name="go_to_login">Already have an account? Log in</string>
+    <string name="login_success">Login successful</string>
+    <string name="register_success">Registration successful. Please log in.</string>
+</resources>

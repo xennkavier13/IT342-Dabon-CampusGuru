@@ -66,7 +66,15 @@ public class UserService {
     
     @Transactional(readOnly = true)
     public AuthResponse loginUser(LoginRequest request) {
-        Optional<User> userOptional = userRepository.findByUsername(request.getUsername());
+        String loginIdentifier = request.getUsername() != null
+            ? request.getUsername().trim().toLowerCase()
+            : "";
+
+        Optional<User> userOptional = userRepository.findByUsername(loginIdentifier);
+
+        if (userOptional.isEmpty()) {
+            userOptional = userRepository.findByInstitutionalEmail(loginIdentifier);
+        }
         
         if (userOptional.isEmpty()) {
             return new AuthResponse(null, null, null, null, null, null, null,
