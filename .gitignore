@@ -28,6 +28,11 @@ pnpm-debug.log*
 backend/src/main/resources/application*.properties
 backend/src/main/resources/application*.yml
 backend/src/main/resources/application*.yaml
+backend/src/main/resources/application-*.properties
+
+# Misplaced/accidental resources folders
+backend/src/main/java/resources/
+backend/src/resources/
 
 # Keep example templates if present
 !backend/src/main/resources/application-example.properties
@@ -49,6 +54,11 @@ bin/
 
 # Gradle
 .gradle/
+local.properties
+.cxx/
+captures/
+*.apk
+*.aab
 
 # Kotlin
 *.kotlin_module
@@ -65,6 +75,7 @@ coverage/
 .next/
 .nuxt/
 .svelte-kit/
+.vite/
 *.tsbuildinfo
 
 # Package manager caches
