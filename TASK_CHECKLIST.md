@@ -29,6 +29,40 @@
 - [x] Build Register page with form validation and role selection
 - [x] Add basic page flow between Login, Register, and Dashboard
 
+### Backend - Marketplace Core (Listings and Bookings)
+- [x] Create `Listing` entity and repository
+- [x] Create `Booking` entity, status enum, and repository
+- [x] Add listing endpoints:
+	- [x] `POST /api/listings`
+	- [x] `GET /api/listings`
+	- [x] `GET /api/listings/{id}`
+- [x] Add booking endpoints:
+	- [x] `POST /api/bookings`
+	- [x] `GET /api/bookings/pending`
+	- [x] `PUT /api/bookings/{id}/status`
+- [x] Enforce role-based access in services (Tutor/Learner checks)
+- [x] Enforce tutor ownership when updating booking status
+- [x] Add ACCEPTED meeting link and DECLINED reason validation rules
+
+### Frontend - Marketplace Core (Tutor and Learner Views)
+- [x] Add role-based routing for Tutor and Learner pages
+- [x] Build Tutor Create Listing page with proof upload UI (mock upload URL)
+- [x] Build Tutor Dashboard pending-requests table with Accept/Decline actions
+- [x] Build Learner Home feed using listing cards from backend
+- [x] Build Learner Listing Details page with booking request form
+- [x] Add marketplace API service layer for listings and bookings
+- [x] Add shared marketplace navbar for role-aware navigation
+
+## Pending / Next Updates
+
+### Marketplace Follow-Up Enhancements
+- [ ] Add learner endpoint `GET /api/bookings/my-requests`
+- [ ] Add learner "My Bookings" UI to show status, meeting link, and decline reason
+- [ ] Hide unavailable listings from learner feed (exclude `PENDING`/`ACCEPTED` bookings)
+- [ ] Add `askingPrice` field support in backend listing model and DTOs
+- [ ] Add asking price input/display in Tutor Create Listing, Learner Home, and Listing Details
+- [ ] Split tutor contact inputs (email, phone, social) in UI and concatenate into `contactInfo` payload
+
 ### Mobile (Android) - Authentication Phase 2
 - [x] Add Retrofit + Gson API client for auth endpoints
 - [x] Add auth models for mobile request/response handling
