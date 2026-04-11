@@ -14,6 +14,11 @@ export interface RegisterRequest {
 
 export interface AuthResponse {
   userId: string | null;
+  institutionalEmail?: string;
+  firstName?: string;
+  lastName?: string;
+  role?: 'LEARNER' | 'TUTOR' | 'ADMIN';
+  token?: string;
   message: string;
   username?: string;
 }
