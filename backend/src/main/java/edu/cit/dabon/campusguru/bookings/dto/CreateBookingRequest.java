@@ -1,4 +1,4 @@
-package edu.cit.dabon.campusguru.feature.bookings.dto;
+package edu.cit.dabon.campusguru.bookings.dto;
 
 public class CreateBookingRequest {
     private Long listingId;

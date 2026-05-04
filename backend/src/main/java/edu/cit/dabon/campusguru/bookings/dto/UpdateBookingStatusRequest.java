@@ -1,8 +1,8 @@
-package edu.cit.dabon.campusguru.feature.bookings.dto;
+package edu.cit.dabon.campusguru.bookings.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import edu.cit.dabon.campusguru.feature.bookings.enums.BookingStatus;
+import edu.cit.dabon.campusguru.bookings.enums.BookingStatus;
 
 public class UpdateBookingStatusRequest {
     private BookingStatus status;

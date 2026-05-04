@@ -1,9 +1,5 @@
-package edu.cit.dabon.campusguru.feature.bookings.controller;
+package edu.cit.dabon.campusguru.bookings.controller;
 
-import edu.cit.dabon.campusguru.feature.bookings.dto.BookingResponse;
-import edu.cit.dabon.campusguru.feature.bookings.dto.CreateBookingRequest;
-import edu.cit.dabon.campusguru.feature.bookings.dto.UpdateBookingStatusRequest;
-import edu.cit.dabon.campusguru.feature.bookings.service.BookingService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +9,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import edu.cit.dabon.campusguru.bookings.dto.BookingResponse;
+import edu.cit.dabon.campusguru.bookings.dto.CreateBookingRequest;
+import edu.cit.dabon.campusguru.bookings.dto.UpdateBookingStatusRequest;
+import edu.cit.dabon.campusguru.bookings.service.BookingService;
 
 import java.util.List;
 
