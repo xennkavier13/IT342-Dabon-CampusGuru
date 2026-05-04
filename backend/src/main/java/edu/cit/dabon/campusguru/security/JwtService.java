@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.HashMap;
@@ -96,6 +98,19 @@ public class JwtService {
             keyBytes = secret.getBytes(StandardCharsets.UTF_8);
         }
 
+        if (keyBytes.length < 32) {
+            keyBytes = sha256(keyBytes);
+        }
+
         return Keys.hmacShaKeyFor(keyBytes);
+    }
+
+    private byte[] sha256(byte[] input) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            return digest.digest(input);
+        } catch (NoSuchAlgorithmException ex) {
+            throw new IllegalStateException("SHA-256 algorithm not available", ex);
+        }
     }
 }
