@@ -21,6 +21,9 @@
     "paths": {
       "@/*": ["src/*"],
       "@shared/*": ["src/shared/*"],
+      "@features/auth": ["src/features/auth/index.ts"],
+      "@features/listing": ["src/features/listing/index.ts"],
+      "@features/booking": ["src/features/booking/index.ts"],
       "@features/*": ["src/features/*"],
       "@app/*": ["src/app/*"]
     },
