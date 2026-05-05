@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import type { FormEvent } from 'react';
 import { useParams } from 'react-router-dom';
-import MarketplaceNavbar from '../components/MarketplaceNavbar';
-import Button from '../components/Button';
-import Input from '../components/Input';
-import { marketplaceService } from '../services/marketplaceService';
-import type { Listing } from '../types/marketplace.types';
+import MarketplaceNavbar from '@shared/components/MarketplaceNavbar';
+import Button from '@shared/components/Button';
+import Input from '@shared/components/Input';
+import { listingService } from '../services/listingService';
+import { bookingService } from '@features/booking';
+import type { Listing } from '../types/listing.types';
 
 const LearnerListingDetailsPage = () => {
   const { id } = useParams();
@@ -30,7 +31,7 @@ const LearnerListingDetailsPage = () => {
       setLoading(true);
       setError('');
       try {
-        const data = await marketplaceService.getListingById(listingId);
+        const data = await listingService.getListingById(listingId);
         setListing(data);
       } catch (requestError: any) {
         setError(requestError?.response?.data?.message || 'Failed to load listing details.');
@@ -53,7 +54,7 @@ const LearnerListingDetailsPage = () => {
     }
 
     try {
-      await marketplaceService.createBooking({
+      await bookingService.createBooking({
         listingId: listing.id,
         requestedTime,
         paymentType,

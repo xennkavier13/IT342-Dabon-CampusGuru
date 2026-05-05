@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
-import Button from './Button';
-import { useAuth } from '../hooks/useAuth';
+import Button from '@shared/components/Button';
+import { useAuth } from '@features/auth';
 
 interface MarketplaceNavbarProps {
   title: string;

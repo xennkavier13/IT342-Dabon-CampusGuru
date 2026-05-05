@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
-import MarketplaceNavbar from '../components/MarketplaceNavbar';
-import Button from '../components/Button';
-import Input from '../components/Input';
-import { marketplaceService } from '../services/marketplaceService';
-import type { Booking } from '../types/marketplace.types';
+import MarketplaceNavbar from '@shared/components/MarketplaceNavbar';
+import Button from '@shared/components/Button';
+import Input from '@shared/components/Input';
+import { bookingService } from '../services/bookingService';
+import type { Booking } from '../types/booking.types';
 
 const TutorDashboardPage = () => {
   const [pendingBookings, setPendingBookings] = useState<Booking[]>([]);
@@ -21,7 +21,7 @@ const TutorDashboardPage = () => {
     setLoading(true);
     setError('');
     try {
-      const data = await marketplaceService.getPendingBookings();
+      const data = await bookingService.getPendingBookings();
       setPendingBookings(data);
     } catch (requestError: any) {
       setError(requestError?.response?.data?.message || 'Failed to fetch pending requests.');
@@ -39,7 +39,7 @@ const TutorDashboardPage = () => {
       return;
     }
 
-    await marketplaceService.updateBookingStatus(acceptingBooking.id, {
+    await bookingService.updateBookingStatus(acceptingBooking.id, {
       status: 'ACCEPTED',
       meeting_link: meetingLink,
     });
@@ -54,7 +54,7 @@ const TutorDashboardPage = () => {
       return;
     }
 
-    await marketplaceService.updateBookingStatus(decliningBooking.id, {
+    await bookingService.updateBookingStatus(decliningBooking.id, {
       status: 'DECLINED',
       decline_reason: declineReason,
     });

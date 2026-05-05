@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import MarketplaceNavbar from '../components/MarketplaceNavbar';
-import { marketplaceService } from '../services/marketplaceService';
-import type { Listing } from '../types/marketplace.types';
+import MarketplaceNavbar from '@shared/components/MarketplaceNavbar';
+import { listingService } from '../services/listingService';
+import type { Listing } from '../types/listing.types';
 
 const LearnerHomePage = () => {
   const [listings, setListings] = useState<Listing[]>([]);
@@ -14,7 +14,7 @@ const LearnerHomePage = () => {
       setLoading(true);
       setError('');
       try {
-        const data = await marketplaceService.getListings();
+        const data = await listingService.getListings();
         setListings(data);
       } catch (requestError: any) {
         setError(requestError?.response?.data?.message || 'Failed to fetch tutor listings.');
