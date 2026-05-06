@@ -1,4 +1,4 @@
-package com.example.mobile.ui.theme
+package com.example.mobile.auth.presentation.theme
 
 import android.app.Activity
 import androidx.compose.foundation.isSystemInDarkTheme

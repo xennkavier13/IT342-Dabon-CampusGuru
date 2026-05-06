@@ -1,4 +1,4 @@
-package com.example.mobile.data.model
+package com.example.mobile.auth.data.model
 
 data class RegisterRequest(
     val username: String,

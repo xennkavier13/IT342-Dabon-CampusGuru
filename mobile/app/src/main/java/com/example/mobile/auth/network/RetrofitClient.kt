@@ -1,8 +1,8 @@
-package com.example.mobile.network
+package com.example.mobile.auth.network
 
 import android.content.Context
 import com.example.mobile.BuildConfig
-import com.example.mobile.util.SessionManager
+import com.example.mobile.auth.util.SessionManager
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
