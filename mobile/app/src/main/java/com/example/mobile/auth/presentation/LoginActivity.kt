@@ -1,4 +1,4 @@
-package com.example.mobile.ui
+package com.example.mobile.auth.presentation
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,10 +9,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.example.mobile.MainActivity
+import com.example.mobile.auth.MainActivity
 import com.example.mobile.R
-import com.example.mobile.ui.viewmodel.AuthViewModel
-import com.example.mobile.ui.viewmodel.AuthViewModelFactory
+import com.example.mobile.auth.presentation.viewmodel.AuthViewModel
+import com.example.mobile.auth.presentation.viewmodel.AuthViewModelFactory
 import com.google.android.material.textfield.TextInputEditText
 
 class LoginActivity : AppCompatActivity() {

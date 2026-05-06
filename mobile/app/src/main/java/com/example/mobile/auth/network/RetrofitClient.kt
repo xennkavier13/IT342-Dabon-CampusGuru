@@ -1,8 +1,8 @@
-package com.example.mobile.network
+package com.example.mobile.auth.network
 
 import android.content.Context
 import com.example.mobile.BuildConfig
-import com.example.mobile.util.SessionManager
+import com.example.mobile.auth.util.SessionManager
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
 
-    private const val BASE_URL = "http://192.168.254.107:8080/api/"
+    private const val BASE_URL = "http://192.168.254.110:8080/api/"
 
     fun createAuthApi(context: Context): AuthApiService {
         val sessionManager = SessionManager(context)

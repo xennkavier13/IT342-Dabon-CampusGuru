@@ -1,11 +1,11 @@
-package com.example.mobile.ui.viewmodel
+package com.example.mobile.auth.presentation.viewmodel
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.mobile.data.repository.AuthRepository
-import com.example.mobile.network.RetrofitClient
-import com.example.mobile.util.SessionManager
+import com.example.mobile.auth.data.repository.AuthRepository
+import com.example.mobile.auth.network.RetrofitClient
+import com.example.mobile.auth.util.SessionManager
 
 class AuthViewModelFactory(
     private val context: Context

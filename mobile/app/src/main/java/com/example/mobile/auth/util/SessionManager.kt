@@ -1,4 +1,4 @@
-package com.example.mobile.util
+package com.example.mobile.auth.util
 
 import android.content.Context
 import android.content.SharedPreferences

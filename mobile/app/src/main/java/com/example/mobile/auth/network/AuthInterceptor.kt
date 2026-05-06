@@ -1,6 +1,6 @@
-package com.example.mobile.network
+package com.example.mobile.auth.network
 
-import com.example.mobile.util.SessionManager
+import com.example.mobile.auth.util.SessionManager
 import okhttp3.Interceptor
 import okhttp3.Response
 

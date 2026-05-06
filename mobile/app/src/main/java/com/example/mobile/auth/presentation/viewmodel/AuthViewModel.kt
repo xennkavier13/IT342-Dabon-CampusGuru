@@ -1,11 +1,11 @@
-package com.example.mobile.ui.viewmodel
+package com.example.mobile.auth.presentation.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mobile.data.model.AuthResponse
-import com.example.mobile.data.repository.AuthRepository
+import com.example.mobile.auth.data.model.AuthResponse
+import com.example.mobile.auth.data.repository.AuthRepository
 import kotlinx.coroutines.launch
 
 class AuthViewModel(

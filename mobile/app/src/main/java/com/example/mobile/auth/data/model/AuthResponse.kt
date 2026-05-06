@@ -1,4 +1,4 @@
-package com.example.mobile.data.model
+package com.example.mobile.auth.data.model
 
 data class AuthResponse(
     val userId: String? = null,
