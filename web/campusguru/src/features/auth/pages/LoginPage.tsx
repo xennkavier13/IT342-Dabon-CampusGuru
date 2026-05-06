@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { authService } from '../services/authService';
-import Input from '../components/Input';
-import Button from '../components/Button';
+import Input from '@shared/components/Input';
+import Button from '@shared/components/Button';
 import type { LoginRequest } from '../types/auth.types';
 
 interface LoginPageProps {

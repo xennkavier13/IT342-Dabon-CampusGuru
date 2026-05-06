@@ -1,12 +1,8 @@
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import type { ReactNode } from 'react';
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
-import TutorCreateListingPage from './pages/TutorCreateListingPage';
-import TutorDashboardPage from './pages/TutorDashboardPage';
-import LearnerHomePage from './pages/LearnerHomePage';
-import LearnerListingDetailsPage from './pages/LearnerListingDetailsPage';
-import { useAuth } from './hooks/useAuth';
+import { LoginPage, RegisterPage, useAuth } from '@features/auth';
+import { TutorCreateListingPage, LearnerHomePage, LearnerListingDetailsPage } from '@features/listing';
+import { TutorDashboardPage } from '@features/booking';
 import './App.css';
 
 const RoleHomeRedirect = () => {

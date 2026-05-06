@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
-import MarketplaceNavbar from '../components/MarketplaceNavbar';
-import Button from '../components/Button';
-import Input from '../components/Input';
-import { marketplaceService } from '../services/marketplaceService';
+import MarketplaceNavbar from '@shared/components/MarketplaceNavbar';
+import Button from '@shared/components/Button';
+import Input from '@shared/components/Input';
+import { listingService } from '../services/listingService';
 
 const TutorCreateListingPage = () => {
   const [subject, setSubject] = useState('');
@@ -49,7 +49,7 @@ const TutorCreateListingPage = () => {
 
     setIsSubmitting(true);
     try {
-      await marketplaceService.createListing({
+      await listingService.createListing({
         subject,
         availableTime,
         contactInfo,

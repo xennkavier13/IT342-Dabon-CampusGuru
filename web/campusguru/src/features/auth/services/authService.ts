@@ -1,4 +1,4 @@
-import api from './api';
+import api from '@shared/services/api';
 import type { LoginRequest, RegisterRequest, AuthResponse } from '../types/auth.types';
 
 const AUTH_CHANGED_EVENT = 'auth-changed';
