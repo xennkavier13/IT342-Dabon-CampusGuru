@@ -1,0 +1,105 @@
+package edu.cit.dabon.campusguru.auth.service;
+
+import edu.cit.dabon.campusguru.auth.dto.AuthResponse;
+import edu.cit.dabon.campusguru.auth.dto.LoginRequest;
+import edu.cit.dabon.campusguru.auth.dto.RegisterRequest;
+import edu.cit.dabon.campusguru.auth.model.User;
+import edu.cit.dabon.campusguru.auth.repository.UserRepository;
+import edu.cit.dabon.campusguru.auth.security.JwtService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
+
+@Service
+public class UserService {
+    
+    @Autowired
+    private UserRepository userRepository;
+    
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private JwtService jwtService;
+    
+    @Transactional
+    public AuthResponse registerUser(RegisterRequest request) {
+        // Check if username already exists
+        if (userRepository.existsByUsername(request.getUsername())) {
+            return new AuthResponse(null, null, null, null, null, null, null,
+                "Username already exists");
+        }
+        
+        // Check if email already exists
+        if (userRepository.existsByInstitutionalEmail(request.getInstitutionalEmail())) {
+            return new AuthResponse(null, null, null, null, null, null, null,
+                "Email already exists");
+        }
+        
+        // Create new user
+        User user = new User(
+            request.getUsername(),
+            request.getInstitutionalEmail(),
+            passwordEncoder.encode(request.getPassword()),
+            request.getFirstName(),
+            request.getLastName(),
+            request.getRole() != null ? request.getRole() : "LEARNER"
+        );
+        
+        User savedUser = userRepository.save(user);
+        String token = jwtService.generateToken(savedUser);
+        
+        return new AuthResponse(
+            savedUser.getUserId(),
+            savedUser.getUsername(),
+            savedUser.getInstitutionalEmail(),
+            savedUser.getFirstName(),
+            savedUser.getLastName(),
+            savedUser.getRole(),
+            token,
+            "User registered successfully"
+        );
+    }
+    
+    @Transactional(readOnly = true)
+    public AuthResponse loginUser(LoginRequest request) {
+        String loginIdentifier = request.getUsername() != null
+            ? request.getUsername().trim().toLowerCase()
+            : "";
+
+        Optional<User> userOptional = userRepository.findByUsername(loginIdentifier);
+
+        if (userOptional.isEmpty()) {
+            userOptional = userRepository.findByInstitutionalEmail(loginIdentifier);
+        }
+        
+        if (userOptional.isEmpty()) {
+            return new AuthResponse(null, null, null, null, null, null, null,
+                "Invalid username or password");
+        }
+        
+        User user = userOptional.get();
+        
+        // Verify password
+        if (!passwordEncoder.matches(request.getPassword(), user.getPasswordHash())) {
+            return new AuthResponse(null, null, null, null, null, null, null,
+                "Invalid username or password");
+        }
+
+        String token = jwtService.generateToken(user);
+        
+        return new AuthResponse(
+            user.getUserId(),
+            user.getUsername(),
+            user.getInstitutionalEmail(),
+            user.getFirstName(),
+            user.getLastName(),
+            user.getRole(),
+            token,
+            "Login successful"
+        );
+    }
+}
