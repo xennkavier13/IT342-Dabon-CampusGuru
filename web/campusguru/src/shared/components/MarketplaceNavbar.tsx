@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import Button from '@shared/components/Button';
 import { useAuth } from '@features/auth';
+import { NotificationBadge } from '@features/notification';
 
 interface MarketplaceNavbarProps {
   title: string;
@@ -42,6 +43,8 @@ const MarketplaceNavbar = ({ title }: MarketplaceNavbarProps) => {
               Browse Tutors
             </Link>
           )}
+
+          <NotificationBadge />
 
           <Button onClick={handleLogout}>Logout</Button>
         </nav>

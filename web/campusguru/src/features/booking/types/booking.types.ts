@@ -17,6 +17,8 @@ export interface CreateBookingRequest {
   listingId: number;
   requestedTime: string;
   paymentType: string;
+  bookedStart?: string;
+  bookedEnd?: string;
 }
 
 export interface UpdateBookingStatusRequest {

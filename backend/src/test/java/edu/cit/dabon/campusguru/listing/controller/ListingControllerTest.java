@@ -47,7 +47,6 @@ class ListingControllerTest {
     void setUp() {
         createRequest = new CreateListingRequest();
         createRequest.setSubject("Computer Architecture");
-        createRequest.setAvailableTime("Mon 3PM-5PM");
         createRequest.setContactInfo("fb: tutor.handle");
         createRequest.setProofOfCompetenceUrl("https://example.com/proof.pdf");
 
@@ -56,7 +55,6 @@ class ListingControllerTest {
                 .tutorId("tutor-uuid")
                 .tutorName("Juan Dela Cruz")
                 .subject("Computer Architecture")
-                .availableTime("Mon 3PM-5PM")
                 .contactInfo("fb: tutor.handle")
                 .proofOfCompetenceUrl("https://example.com/proof.pdf")
                 .build();
@@ -68,8 +66,8 @@ class ListingControllerTest {
         when(listingService.createListing(any(CreateListingRequest.class))).thenReturn(sampleResponse);
 
         mockMvc.perform(post("/api/listings")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(createRequest)))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(createRequest)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.subject").value("Computer Architecture"));

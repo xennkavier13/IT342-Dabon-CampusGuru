@@ -7,7 +7,6 @@ import { listingService } from '../services/listingService';
 
 const TutorCreateListingPage = () => {
   const [subject, setSubject] = useState('');
-  const [availableTime, setAvailableTime] = useState('');
   const [contactInfo, setContactInfo] = useState('');
   const [proofFileName, setProofFileName] = useState('');
   const [proofUrl, setProofUrl] = useState('');
@@ -42,7 +41,7 @@ const TutorCreateListingPage = () => {
     setMessage('');
     setError('');
 
-    if (!subject.trim() || !availableTime.trim() || !contactInfo.trim() || !proofUrl.trim()) {
+    if (!subject.trim() || !contactInfo.trim() || !proofUrl.trim()) {
       setError('Please complete all fields and upload proof of competence.');
       return;
     }
@@ -51,13 +50,11 @@ const TutorCreateListingPage = () => {
     try {
       await listingService.createListing({
         subject,
-        availableTime,
         contactInfo,
         proofOfCompetenceUrl: proofUrl,
       });
 
       setSubject('');
-      setAvailableTime('');
       setContactInfo('');
       setProofFileName('');
       setProofUrl('');
@@ -88,14 +85,6 @@ const TutorCreateListingPage = () => {
               value={subject}
               onChange={(event) => setSubject(event.target.value)}
               placeholder="Computer Architecture"
-            />
-
-            <Input
-              label="Available Time"
-              name="availableTime"
-              value={availableTime}
-              onChange={(event) => setAvailableTime(event.target.value)}
-              placeholder="Mon, Wed, Fri 3:00 PM - 5:00 PM"
             />
 
             <Input

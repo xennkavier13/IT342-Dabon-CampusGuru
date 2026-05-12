@@ -5,7 +5,7 @@ import MarketplaceNavbar from '@shared/components/MarketplaceNavbar';
 import Button from '@shared/components/Button';
 import Input from '@shared/components/Input';
 import { listingService } from '../services/listingService';
-import { bookingService } from '@features/booking';
+import { SlotPicker } from '@features/booking';
 import type { Listing } from '../types/listing.types';
 
 const LearnerListingDetailsPage = () => {
@@ -17,8 +17,7 @@ const LearnerListingDetailsPage = () => {
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
 
-  const [requestedTime, setRequestedTime] = useState('');
-  const [paymentType, setPaymentType] = useState('Cash');
+
 
   useEffect(() => {
     const fetchListing = async () => {
@@ -43,28 +42,6 @@ const LearnerListingDetailsPage = () => {
     void fetchListing();
   }, [listingId]);
 
-  const handleBook = async (event: FormEvent) => {
-    event.preventDefault();
-    setError('');
-    setMessage('');
-
-    if (!listing || !requestedTime.trim() || !paymentType.trim()) {
-      setError('Please choose requested time and payment type.');
-      return;
-    }
-
-    try {
-      await bookingService.createBooking({
-        listingId: listing.id,
-        requestedTime,
-        paymentType,
-      });
-      setMessage('Booking request submitted. Wait for tutor response.');
-      setRequestedTime('');
-    } catch (requestError: any) {
-      setError(requestError?.response?.data?.message || 'Failed to create booking request.');
-    }
-  };
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -81,7 +58,6 @@ const LearnerListingDetailsPage = () => {
             <h2 className="mt-2 text-3xl font-bold text-slate-900">{listing.subject}</h2>
 
             <div className="mt-4 space-y-2 text-sm text-slate-700">
-              <p><span className="font-semibold">Available Time:</span> {listing.availableTime}</p>
               <p><span className="font-semibold">Contact Info:</span> {listing.contactInfo}</p>
               <p>
                 <span className="font-semibold">Proof of Competence:</span>{' '}
@@ -89,34 +65,27 @@ const LearnerListingDetailsPage = () => {
                   View Document
                 </a>
               </p>
+              <p>
+                <span className="font-semibold">Scheduling Window:</span>{' '}
+                {listing.availabilityStartDate ? (
+                  <span>
+                    {listing.availabilityStartDate} to {listing.availabilityEndDate} · {listing.availabilityDailyStartTime} – {listing.availabilityDailyEndTime}
+                  </span>
+                ) : (
+                  <span className="italic text-slate-500">Not set by tutor</span>
+                )}
+              </p>
             </div>
 
             {message && <p className="mt-4 rounded-md bg-emerald-50 px-4 py-3 text-sm text-emerald-700">{message}</p>}
 
-            <form onSubmit={handleBook} className="mt-6 rounded-xl border border-slate-200 bg-slate-50 p-4">
-              <h3 className="text-lg font-bold text-slate-900">Book This Tutor</h3>
-
-              <Input
-                label="Requested Time"
-                value={requestedTime}
-                onChange={(event) => setRequestedTime(event.target.value)}
-                placeholder="Tue 4:00 PM - 5:00 PM"
-              />
-
-              <div className="mb-4">
-                <label className="mb-1.5 block text-xs font-semibold text-gray-800">Payment Type</label>
-                <select
-                  value={paymentType}
-                  onChange={(event) => setPaymentType(event.target.value)}
-                  className="h-10 w-full rounded-md border border-gray-300 bg-white px-3 text-sm text-gray-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
-                >
-                  <option value="Cash">Cash</option>
-                  <option value="GCash">GCash</option>
-                </select>
+            {listing.availabilityStartDate ? (
+              <SlotPicker listingId={listing.id} onBooked={() => setMessage('Booking request submitted!')} />
+            ) : (
+              <div className="mt-6 rounded-xl border border-slate-200 bg-slate-50 p-6 text-center text-sm text-slate-500">
+                This tutor hasn't set their scheduling availability yet. Please check back later.
               </div>
-
-              <Button type="submit">Book this tutor</Button>
-            </form>
+            )}
           </section>
         )}
       </main>

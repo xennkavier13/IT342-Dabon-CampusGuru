@@ -9,4 +9,7 @@ public class CreateBookingRequest {
     private Long listingId;
     private String requestedTime;
     private String paymentType;
+    // ISO datetime strings for the booked slot (from the slot picker)
+    private String bookedStart;
+    private String bookedEnd;
 }
