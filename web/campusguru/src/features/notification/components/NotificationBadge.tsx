@@ -51,7 +51,7 @@ const NotificationBadge = () => {
 
       {/* Dropdown panel */}
       {isOpen && (
-        <div className="absolute right-0 top-full z-50 mt-2 w-80 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl sm:w-96">
+        <div className="absolute right-0 top-full z-50 mt-2 w-80 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl sm:w-[28rem]">
           <div className="border-b border-slate-100 px-4 py-3">
             <h3 className="text-sm font-bold text-slate-900">Notifications</h3>
           </div>

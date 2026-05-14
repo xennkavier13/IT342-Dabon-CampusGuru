@@ -72,7 +72,7 @@ const NotificationList = ({ notifications, loading, onMarkAsRead }: Notification
                   <span className="h-2 w-2 rounded-full bg-blue-500" />
                 )}
               </div>
-              <p className="mt-0.5 text-sm text-slate-700 line-clamp-2">{notification.message}</p>
+              <p className="mt-0.5 text-sm text-slate-700 break-words">{notification.message}</p>
               <p className="mt-1 text-xs text-slate-400">{timeAgo}</p>
             </div>
           </button>
