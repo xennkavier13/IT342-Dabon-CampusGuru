@@ -18,7 +18,9 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "listings")
@@ -40,14 +42,26 @@ public class Listing {
     @Column(nullable = false)
     private String subject;
 
-    @Column(nullable = false, name = "available_time")
-    private String availableTime;
-
     @Column(nullable = false, name = "contact_info")
     private String contactInfo;
 
     @Column(nullable = false, name = "proof_of_competence_url")
     private String proofOfCompetenceUrl;
+
+    @Column(name = "availability_start_date")
+    private LocalDate availabilityStartDate;
+
+    @Column(name = "availability_end_date")
+    private LocalDate availabilityEndDate;
+
+    @Column(name = "availability_daily_start_time")
+    private LocalTime availabilityDailyStartTime;
+
+    @Column(name = "availability_daily_end_time")
+    private LocalTime availabilityDailyEndTime;
+
+    @Column(name = "google_calendar_event_id")
+    private String googleCalendarEventId;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)

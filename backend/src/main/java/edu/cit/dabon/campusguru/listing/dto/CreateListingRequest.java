@@ -7,7 +7,6 @@ import lombok.Setter;
 @Setter
 public class CreateListingRequest {
     private String subject;
-    private String availableTime;
     private String contactInfo;
     private String proofOfCompetenceUrl;
 }

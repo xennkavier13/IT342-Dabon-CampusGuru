@@ -51,7 +51,6 @@ const LearnerHomePage = () => {
                 <article key={listing.id} className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
                   <p className="text-xs font-semibold uppercase tracking-wider text-blue-600">{listing.tutorName}</p>
                   <h3 className="mt-2 text-xl font-bold text-slate-900">{listing.subject}</h3>
-                  <p className="mt-2 text-sm text-slate-600">{listing.availableTime}</p>
                   <p className="mt-2 text-sm text-slate-600">Asking Price: Free</p>
 
                   <Link

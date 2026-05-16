@@ -60,6 +60,15 @@ public class Booking {
     @Column(name = "decline_reason")
     private String declineReason;
 
+    @Column(name = "booked_start")
+    private LocalDateTime bookedStart;
+
+    @Column(name = "booked_end")
+    private LocalDateTime bookedEnd;
+
+    @Column(name = "nylas_event_id")
+    private String nylasEventId;
+
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;

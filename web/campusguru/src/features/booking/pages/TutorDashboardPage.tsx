@@ -3,10 +3,17 @@ import MarketplaceNavbar from '@shared/components/MarketplaceNavbar';
 import Button from '@shared/components/Button';
 import Input from '@shared/components/Input';
 import { bookingService } from '../services/bookingService';
+import { listingService } from '@features/listing/services/listingService';
+import { GoogleCalendarConnect } from '@features/googleauth';
+import AvailabilityForm from '@features/listing/components/AvailabilityForm';
 import type { Booking } from '../types/booking.types';
+import type { Listing } from '@features/listing/types/listing.types';
+import { useAuth } from '@features/auth';
 
 const TutorDashboardPage = () => {
+  const { user } = useAuth();
   const [pendingBookings, setPendingBookings] = useState<Booking[]>([]);
+  const [listings, setListings] = useState<Listing[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -14,6 +21,7 @@ const TutorDashboardPage = () => {
   const [decliningBooking, setDecliningBooking] = useState<Booking | null>(null);
   const [meetingLink, setMeetingLink] = useState('');
   const [declineReason, setDeclineReason] = useState('');
+  const [selectedListingForAvailability, setSelectedListingForAvailability] = useState<Listing | null>(null);
 
   const isModalOpen = useMemo(() => !!acceptingBooking || !!decliningBooking, [acceptingBooking, decliningBooking]);
 
@@ -30,8 +38,20 @@ const TutorDashboardPage = () => {
     }
   };
 
+  const loadListings = async () => {
+    try {
+      const allListings = await listingService.getListings();
+      // Filter to only show the current tutor's listings
+      const myListings = allListings.filter(l => l.tutorId === user?.userId);
+      setListings(myListings);
+    } catch {
+      // Silently fail — listings section is supplementary
+    }
+  };
+
   useEffect(() => {
     void loadPendingBookings();
+    void loadListings();
   }, []);
 
   const handleAccept = async () => {
@@ -68,7 +88,59 @@ const TutorDashboardPage = () => {
     <div className="min-h-screen bg-slate-50">
       <MarketplaceNavbar title="Tutor Dashboard" />
 
-      <main className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+      <main className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 lg:px-8 space-y-6">
+        {/* Google Calendar Connection */}
+        <section>
+          <GoogleCalendarConnect />
+        </section>
+
+        {/* Availability Management */}
+        {listings.length > 0 && (
+          <section className="rounded-2xl border border-blue-100 bg-white p-6 shadow-sm">
+            <h2 className="text-2xl font-bold text-slate-900">Manage Availability</h2>
+            <p className="mt-1 text-sm text-slate-600">Set your availability window for each listing.</p>
+
+            <div className="mt-4 space-y-3">
+              {listings.map((listing) => (
+                <div key={listing.id} className="flex items-center justify-between rounded-lg border border-slate-200 bg-slate-50 px-4 py-3">
+                  <div>
+                    <p className="font-semibold text-slate-800">{listing.subject}</p>
+                    {listing.availabilityStartDate ? (
+                      <p className="text-xs text-slate-500">
+                        {listing.availabilityStartDate} to {listing.availabilityEndDate} · {listing.availabilityDailyStartTime} – {listing.availabilityDailyEndTime}
+                      </p>
+                    ) : (
+                      <p className="text-xs text-amber-600">No availability set</p>
+                    )}
+                  </div>
+                  <Button
+                    variant="outline"
+                    onClick={() => setSelectedListingForAvailability(
+                      selectedListingForAvailability?.id === listing.id ? null : listing
+                    )}
+                  >
+                    {selectedListingForAvailability?.id === listing.id ? 'Close' : 'Set Availability'}
+                  </Button>
+                </div>
+              ))}
+            </div>
+
+            {selectedListingForAvailability && (
+              <div className="mt-4">
+                <AvailabilityForm
+                  listingId={selectedListingForAvailability.id}
+                  currentAvailability={selectedListingForAvailability}
+                  onSaved={() => {
+                    setSelectedListingForAvailability(null);
+                    void loadListings();
+                  }}
+                />
+              </div>
+            )}
+          </section>
+        )}
+
+        {/* Pending Requests */}
         <section className="rounded-2xl border border-blue-100 bg-white p-6 shadow-sm">
           <h2 className="text-2xl font-bold text-slate-900">Pending Requests</h2>
           <p className="mt-1 text-sm text-slate-600">Review and respond to incoming booking requests from learners.</p>
