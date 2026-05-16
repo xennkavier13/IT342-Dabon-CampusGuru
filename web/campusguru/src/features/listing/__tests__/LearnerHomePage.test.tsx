@@ -41,7 +41,7 @@ describe('LearnerHomePage', () => {
 
   it('renders listing cards from API', async () => {
     vi.mocked(listingService.getListings).mockResolvedValue([
-      { id: 1, tutorId: 't1', tutorName: 'Juan', subject: 'Math', availableTime: 'Mon 3PM', contactInfo: 'fb', proofOfCompetenceUrl: 'url' },
+      { id: 1, tutorId: 't1', tutorName: 'Juan', subject: 'Math', availabilityStartDate: '2024-05-20', availabilityEndDate: '2024-05-27', availabilityDailyStartTime: '15:00', availabilityDailyEndTime: '16:00', contactInfo: 'fb', proofOfCompetenceUrl: 'url' },
     ]);
     renderPage();
     await waitFor(() => {

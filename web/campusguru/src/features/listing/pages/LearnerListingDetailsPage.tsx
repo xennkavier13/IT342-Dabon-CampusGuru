@@ -1,9 +1,6 @@
 import { useEffect, useState } from 'react';
-import type { FormEvent } from 'react';
 import { useParams } from 'react-router-dom';
 import MarketplaceNavbar from '@shared/components/MarketplaceNavbar';
-import Button from '@shared/components/Button';
-import Input from '@shared/components/Input';
 import { listingService } from '../services/listingService';
 import { SlotPicker } from '@features/booking';
 import type { Listing } from '../types/listing.types';
