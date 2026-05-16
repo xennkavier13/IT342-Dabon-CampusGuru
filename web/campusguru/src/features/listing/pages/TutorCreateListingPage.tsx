@@ -109,7 +109,7 @@ const TutorCreateListingPage = () => {
             </div>
 
             <Button type="submit" isLoading={isSubmitting} className="mt-2 w-full">
-              Submit for Review
+              Submit
             </Button>
           </form>
         </section>
